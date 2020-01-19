@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cycleissuer'
+    'cycleissuer',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
