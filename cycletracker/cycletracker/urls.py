@@ -17,11 +17,16 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from cycleissuer import views
+from django.views.decorators.csrf import csrf_exempt
 
 router = routers.DefaultRouter()
 router.register('users', views.UserViewSet)
 router.register('cycles', views.CycleViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cycleissuer/', include(router.urls))
+    path('cycleissuer/', include(router.urls)),
+    path('cycleissuer/lock', csrf_exempt(views.LockView.as_view())),
+    path('cycleissuer/auth/', include('djoser.urls')),
+    path('cycleissuer/auth/', include('djoser.urls.authtoken'))
 ]
