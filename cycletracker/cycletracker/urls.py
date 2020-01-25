@@ -26,7 +26,9 @@ router.register('cycles', views.CycleViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cycleissuer/', include(router.urls)),
-    path('cycleissuer/lock', csrf_exempt(views.LockView.as_view())),
+    path('cycleissuer/cycle/lock', csrf_exempt(views.CycleLockView.as_view())),
+    path('cycleissuer/cycle/book', csrf_exempt(views.CycleBookingView.as_view())),
+    path('cycleissuer/cycle/return', csrf_exempt(views.CycleReturnView.as_view())),
     path('cycleissuer/auth/', include('djoser.urls')),
     path('cycleissuer/auth/', include('djoser.urls.authtoken'))
 ]

@@ -25,7 +25,7 @@ SECRET_KEY = '6y!fj5ggx5*5_4+=botldahen^-5%crz4tdb&y73xa!fvx!v3v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ 'localhost', '10.0.2.2', '192.168.43.165']
 
 
 # Application definition
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'cycletracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cycleissuerdb',
+        'NAME': 'cycle_issuer_db',
         'USER': 'reckoner1429',
         'PASSWORD': 'root',
         'HOST': '127.0.0.1',
@@ -136,4 +136,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated'
     ]
+}
+
+DJOSER = {
+
 }

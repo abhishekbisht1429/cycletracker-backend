@@ -13,7 +13,8 @@ class User(AbstractUser):
         return str(self.username)
     
 class Cycle(models.Model):
-    qrcode = models.CharField(unique=True, max_length=1000)
+    qrcode = models.CharField(unique=True, max_length=100)
     lock = models.BooleanField()
+    controller_topic = models.CharField(unique=True, max_length=100)
     user = models.OneToOneField(User, on_delete = models.SET_NULL, null = True, blank = True)
 
