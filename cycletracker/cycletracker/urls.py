@@ -29,6 +29,7 @@ urlpatterns = [
     path('cycleissuer/cycle/lock', csrf_exempt(views.CycleLockView.as_view())),
     path('cycleissuer/cycle/book', csrf_exempt(views.CycleBookingView.as_view())),
     path('cycleissuer/cycle/return', csrf_exempt(views.CycleReturnView.as_view())),
+    path('cycleissuer/cycle/booked', csrf_exempt(views.CycleIdView.as_view())),
     path('cycleissuer/auth/', include('djoser.urls')),
     path('cycleissuer/auth/', include('djoser.urls.authtoken'))
 ]

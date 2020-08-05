@@ -30,8 +30,8 @@ client.connect("localhost", 1883)
 client.loop_start()
 
 class CycleLockView(APIView):
-    def lock(self, val):
-        client.publish("lock", val)
+    def lock(self, topic, val):
+        client.publish(topic, val)
     
     def post(self, request):
         user = request.user
@@ -40,11 +40,12 @@ class CycleLockView(APIView):
         except Cycle.DoesNotExist:
             return JsonResponse({'error':True, 'message':'Cycle not issued to current user'}, status=403)
         
+        topic = cycle.controller_topic
         if(int(request.POST.get("lock")) == 1):
-            self.lock(1)
+            self.lock(topic, 1)
             cycle.lock = 1
         else:
-            self.lock(0)
+            self.lock(topic, 0)
             cycle.lock = 0
         cycle.save()
         return JsonResponse({'error':False, 'message':'success'})
@@ -63,7 +64,7 @@ class CycleBookingView(APIView):
         user = request.user
         cycle.user = user
         cycle.save()
-        return JsonResponse({'error':False, 'message':'Registered Successfully'}, status=200)
+        return JsonResponse({'error':False, 'message':'Registered Successfully', 'cycle_id':cycle.id}, status=200)
 
 class CycleReturnView(APIView):
     
@@ -84,3 +85,15 @@ class CycleReturnView(APIView):
         cycle.save()
 
         return JsonResponse({'error':False, 'message': 'returned successfully'}, status=200)
+
+class CycleIdView(APIView):
+
+    def get(self, request):
+        user = request.user
+        try:
+            cycle = Cycle.objects.get(user_id = user.username)
+        except Cycle.DoesNotExist:
+            return JsonResponse({'error':False, 'message':'No cycle registered with current user'}, status=200)
+        
+        return JsonResponse({'error':False, 'message':'sucess', 'cycle_id':str(cycle.id)}, status=200)
+
